@@ -29,6 +29,7 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+    namespace 'edu.virginia.cs4720.finalproject.scp4exq'
 }
 
 dependencies {
