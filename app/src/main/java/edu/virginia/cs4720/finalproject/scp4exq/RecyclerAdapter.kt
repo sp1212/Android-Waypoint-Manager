@@ -1,11 +1,9 @@
 package edu.virginia.cs4720.finalproject.scp4exq
 
 import android.content.Context
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.CheckBox
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
@@ -25,22 +23,26 @@ class RecyclerAdapter(var context: Context): RecyclerView.Adapter<RecyclerAdapte
     }
 
     override fun onBindViewHolder(holder: RecyclerAdapter.ViewHolder, position: Int) {
-        holder.itemTitle.text = data[position].title
-        holder.itemDate.text = data[position].date
-        holder.itemId.text = data[position].id.toString()
+        holder.id.text = data[position].id.toString()
+        holder.title.text = data[position].title
+        holder.date.text = data[position].date
+        holder.notes.text = data[position].notes
+        holder.latlong.text = data[position].lat + " " + data[position].long
     }
 
     inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
-        var itemTitle: TextView
-        var itemDate: TextView
-        var itemId: TextView
-        var itemCheck: CheckBox
+        var id: TextView
+        var title: TextView
+        var date: TextView
+        var notes: TextView
+        var latlong: TextView
 
         init {
-            itemTitle = itemView.findViewById(R.id.item_title)
-            itemDate = itemView.findViewById(R.id.item_date)
-            itemId = itemView.findViewById(R.id.itemId)
-            itemCheck = itemView.findViewById(R.id.checkBox)
+            id = itemView.findViewById(R.id.itemId)
+            title = itemView.findViewById(R.id.item_title)
+            date = itemView.findViewById(R.id.item_date)
+            notes = itemView.findViewById(R.id.notes_text)
+            latlong = itemView.findViewById(R.id.text_latlong)
         }
     }
 
