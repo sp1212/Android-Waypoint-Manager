@@ -56,6 +56,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="8dp"
+            android:contentDescription="Delete"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@android:drawable/ic_menu_delete" />
@@ -67,6 +68,7 @@
             android:layout_marginTop="16dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="16dp"
+            android:contentDescription="Share"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/delete_button"
@@ -76,12 +78,12 @@
             android:id="@+id/weather_image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
             android:scaleX="2"
             android:scaleY="2"
             app:layout_constraintBottom_toTopOf="@+id/weather_temp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/distance_text"
+            app:layout_constraintStart_toStartOf="@+id/distance_text"
+            app:layout_constraintTop_toBottomOf="@+id/distance_text"
             app:layout_constraintVertical_chainStyle="packed"
             app:srcCompat="@android:drawable/ic_menu_gallery" />
 
@@ -89,13 +91,11 @@
             android:id="@+id/weather_temp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
             android:text="-2° F"
             android:textColor="#FFFFFF"
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/weather_image"
-            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="@+id/weather_image"
             app:layout_constraintTop_toBottomOf="@+id/weather_image" />
 
@@ -127,6 +127,21 @@
             app:layout_constraintStart_toStartOf="@+id/item_title"
             app:layout_constraintTop_toBottomOf="@+id/item_date"
             app:layout_constraintVertical_bias="0.0" />
+
+        <TextView
+            android:id="@+id/distance_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="823 m"
+            android:textAlignment="center"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/weather_image"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="spread" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

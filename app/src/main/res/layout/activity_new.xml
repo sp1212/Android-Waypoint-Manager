@@ -5,31 +5,47 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <Button
+        android:id="@+id/location_button"
+        android:layout_width="wrap_content"
+        android:layout_height="68dp"
+        android:backgroundTint="@color/blue"
+        android:text="Find Location"
+        android:textColor="@color/white"
+        app:iconTint="@color/white"
+        app:layout_constraintBottom_toTopOf="@+id/submitButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/latitude_new"
+        app:layout_constraintTop_toBottomOf="@+id/button2" />
+
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="New Item"
+        android:text="New Entry"
         android:textColor="@color/black"
         android:textSize="48sp"
         app:layout_constraintBottom_toTopOf="@+id/itemTitle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="spread" />
 
     <EditText
         android:id="@+id/itemTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
+        android:hint="Title"
         android:inputType="textPersonName"
         android:minHeight="48dp"
-        android:text="Item Title"
+        android:singleLine="true"
         android:textAlignment="center"
         android:textColor="@color/black"
         android:textSize="24sp"
-        app:layout_constraintBottom_toTopOf="@+id/button2"
+        app:layout_constraintBottom_toTopOf="@+id/new_notes"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -47,21 +63,22 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button2" />
+        app:layout_constraintTop_toBottomOf="@+id/location_button" />
 
     <TextView
         android:id="@+id/chooseDate"
-        android:layout_width="151dp"
-        android:layout_height="44dp"
-        android:text="Date"
+        android:layout_width="171dp"
+        android:layout_height="48dp"
+        android:hint="Date"
         android:textAlignment="center"
         android:textColor="@color/black"
         android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/latitude_new"
         app:layout_constraintEnd_toStartOf="@+id/button2"
-        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/new_notes"
+        app:layout_constraintVertical_bias="0.571" />
 
     <Button
         android:id="@+id/button2"
@@ -71,9 +88,49 @@
         android:text="Choose Date"
         android:textColor="@color/white"
         app:iconTint="@color/white"
-        app:layout_constraintBottom_toBottomOf="@+id/chooseDate"
+        app:layout_constraintBottom_toTopOf="@+id/location_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/chooseDate"
-        app:layout_constraintTop_toTopOf="@+id/chooseDate" />
+        app:layout_constraintTop_toBottomOf="@+id/new_notes" />
+
+    <EditText
+        android:id="@+id/new_notes"
+        android:layout_width="276dp"
+        android:layout_height="85dp"
+        android:ems="10"
+        android:gravity="start|top"
+        android:hint="Notes"
+        android:inputType="textMultiLine"
+        android:singleLine="false"
+        app:layout_constraintBottom_toTopOf="@+id/button2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/itemTitle" />
+
+    <TextView
+        android:id="@+id/latitude_new"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:hint="Latitude"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/longitude_new"
+        app:layout_constraintEnd_toEndOf="@+id/longitude_new"
+        app:layout_constraintEnd_toStartOf="@+id/location_button"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/location_button" />
+
+    <TextView
+        android:id="@+id/longitude_new"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Longitude"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@+id/location_button"
+        app:layout_constraintEnd_toEndOf="@+id/latitude_new"
+        app:layout_constraintStart_toStartOf="@+id/latitude_new" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

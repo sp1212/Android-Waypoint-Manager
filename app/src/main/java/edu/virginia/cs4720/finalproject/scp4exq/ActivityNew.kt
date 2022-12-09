@@ -4,6 +4,7 @@ import android.app.DatePickerDialog
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
+import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -14,6 +15,7 @@ class ActivityNew : AppCompatActivity() {
 
     lateinit var chooseDate: Button
     lateinit var chosenDate: TextView
+    lateinit var notesField: EditText
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,6 +23,7 @@ class ActivityNew : AppCompatActivity() {
 
         chooseDate = findViewById(R.id.button2)
         chosenDate = findViewById(R.id.chooseDate)
+        notesField = findViewById(R.id.new_notes)
 
         chooseDate.setOnClickListener {
             val cal = Calendar.getInstance()
@@ -40,8 +43,9 @@ class ActivityNew : AppCompatActivity() {
 
         submitButton.setOnClickListener {
             if (itemTitle.text.toString().isNotEmpty() && chosenDate.text.toString().isNotEmpty()
-                && chosenDate.text.toString().compareTo("Date") !== 0) {
-                var item = Waypoint(itemTitle.text.toString(), chosenDate.text.toString(), "Sample Notes", "Lat", "Long")
+                && notesField.text.toString().length < 256) {
+                var item = Waypoint(itemTitle.text.toString(), chosenDate.text.toString(),
+                    notesField.text.toString(), "Lat", "Long")
                 var db = DatabaseHandler(context)
                 db.insertData(item)
 
