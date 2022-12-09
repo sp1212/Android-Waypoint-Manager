@@ -1,10 +1,14 @@
 package edu.virginia.cs4720.finalproject.scp4exq
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import android.widget.TextView
+import android.widget.Toast
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 
 
@@ -28,6 +32,18 @@ class RecyclerAdapter(var context: Context): RecyclerView.Adapter<RecyclerAdapte
         holder.date.text = data[position].date
         holder.notes.text = data[position].notes
         holder.latlong.text = data[position].lat + " " + data[position].long
+
+        holder.deleteButton.setOnClickListener {
+            if (holder.id.text.toString().toInt() >= 0) {
+                var db = DatabaseHandler(context)
+                db.deleteItem(holder.id.text.toString().toInt())
+
+                val intent = Intent(it.context, MainActivity::class.java)
+                it.context.startActivity(intent)
+            } else {
+                Toast.makeText(context, "Unable to delete item.", Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 
     inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
@@ -36,6 +52,7 @@ class RecyclerAdapter(var context: Context): RecyclerView.Adapter<RecyclerAdapte
         var date: TextView
         var notes: TextView
         var latlong: TextView
+        var deleteButton: ImageButton
 
         init {
             id = itemView.findViewById(R.id.itemId)
@@ -43,6 +60,7 @@ class RecyclerAdapter(var context: Context): RecyclerView.Adapter<RecyclerAdapte
             date = itemView.findViewById(R.id.item_date)
             notes = itemView.findViewById(R.id.notes_text)
             latlong = itemView.findViewById(R.id.text_latlong)
+            deleteButton = itemView.findViewById(R.id.delete_button)
         }
     }
 
