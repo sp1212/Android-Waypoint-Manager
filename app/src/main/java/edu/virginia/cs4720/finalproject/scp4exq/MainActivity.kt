@@ -16,6 +16,8 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        bottomNavigationView.background = null
+        bottomNavigationView.menu.getItem(1).isEnabled = false
 
         layoutManager = LinearLayoutManager(this)
 
@@ -24,7 +26,7 @@ class MainActivity : AppCompatActivity() {
         adapter = RecyclerAdapter(this)
         recyclerView.adapter = adapter
 
-        val newItemButton = findViewById<FloatingActionButton>(R.id.floatingActionButton)
+        val newItemButton = findViewById<FloatingActionButton>(R.id.fab)
         newItemButton.setOnClickListener {
             val intent = Intent(this, ActivityNew::class.java)
             startActivity(intent)
