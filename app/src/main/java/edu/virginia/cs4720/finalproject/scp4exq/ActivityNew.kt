@@ -16,6 +16,8 @@ class ActivityNew : AppCompatActivity() {
     lateinit var chooseDate: Button
     lateinit var chosenDate: TextView
     lateinit var notesField: EditText
+    lateinit var latField: TextView
+    lateinit var longField: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,6 +26,8 @@ class ActivityNew : AppCompatActivity() {
         chooseDate = findViewById(R.id.button2)
         chosenDate = findViewById(R.id.chooseDate)
         notesField = findViewById(R.id.new_notes)
+        latField = findViewById(R.id.latitude_new)
+        longField = findViewById(R.id.longitude_new)
 
         chooseDate.setOnClickListener {
             val cal = Calendar.getInstance()
@@ -45,7 +49,7 @@ class ActivityNew : AppCompatActivity() {
             if (itemTitle.text.toString().isNotEmpty() && chosenDate.text.toString().isNotEmpty()
                 && notesField.text.toString().length < 256) {
                 var item = Waypoint(itemTitle.text.toString(), chosenDate.text.toString(),
-                    notesField.text.toString(), "Lat", "Long")
+                    notesField.text.toString(), latField.text.toString(), longField.text.toString())
                 var db = DatabaseHandler(context)
                 db.insertData(item)
 
