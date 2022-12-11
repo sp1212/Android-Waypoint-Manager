@@ -1,5 +1,6 @@
 package edu.virginia.cs4720.finalproject.scp4exq
 
+import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.content.Intent.*
@@ -34,15 +35,25 @@ class RecyclerAdapter(var context: Context): RecyclerView.Adapter<RecyclerAdapte
         holder.latlong.text = data[position].lat + " " + data[position].long
 
         holder.deleteButton.setOnClickListener {
-            if (holder.id.text.toString().toInt() >= 0) {
-                var db = DatabaseHandler(context)
-                db.deleteItem(holder.id.text.toString().toInt())
+            val builder = AlertDialog.Builder(context)
+            builder.setMessage("Delete waypoint:  " + holder.title.text + "?")
+                .setCancelable(false)
+                .setPositiveButton("Yes") { dialog, id ->
+                    if (holder.id.text.toString().toInt() >= 0) {
+                        var db = DatabaseHandler(context)
+                        db.deleteItem(holder.id.text.toString().toInt())
 
-                val intent = Intent(it.context, MainActivity::class.java)
-                it.context.startActivity(intent)
-            } else {
-                Toast.makeText(context, "Unable to delete item.", Toast.LENGTH_SHORT).show()
-            }
+                        val intent = Intent(it.context, MainActivity::class.java)
+                        it.context.startActivity(intent)
+                    } else {
+                        Toast.makeText(context, "Unable to delete item.", Toast.LENGTH_SHORT).show()
+                    }
+                }
+                .setNegativeButton("No") { dialog, id ->
+                    dialog.dismiss()
+                }
+            val alert = builder.create()
+            alert.show()
         }
 
         holder.shareButton.setOnClickListener {
@@ -98,4 +109,9 @@ class RecyclerAdapter(var context: Context): RecyclerView.Adapter<RecyclerAdapte
  *  Author: Atif Pervaiz
  *  Date: November 19, 2018
  *  URL: https://devofandroid.blogspot.com/2018/11/send-email-using-intent-android-studio.html
+ *
+ *  Title: How to Set confirm delete AlertDialogue box in kotlin
+ *  Author: Son Truong
+ *  Date: Dec 16, 2019
+ *  URL: https://stackoverflow.com/questions/59340099/how-to-set-confirm-delete-alertdialogue-box-in-kotlin
  ***************************************************************************************/
