@@ -17,6 +17,15 @@ class Waypoint {
         this.long = long
     }
 
+    constructor(id: Int, title:String, date:String, notes:String, lat:String, long:String) {
+        this.id = id
+        this.title = title
+        this.date = date
+        this.notes = notes
+        this.lat = lat
+        this.long = long
+    }
+
     constructor() {
 
     }

@@ -32,6 +32,13 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        // placeholder to open maps while figuring out nav menu
+        val mapButtonPlaceholder = findViewById<FloatingActionButton>(R.id.floatingActionButton)
+        mapButtonPlaceholder.setOnClickListener {
+            val intent = Intent(this, ActivityMap::class.java)
+            startActivity(intent)
+        }
+
         supportActionBar?.title = "Waypoint Journal"
     }
 }

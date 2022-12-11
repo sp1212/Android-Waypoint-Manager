@@ -17,16 +17,25 @@ class ActivityMap : AppCompatActivity(), OnMapReadyCallback {
 
         val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as? SupportMapFragment
         mapFragment?.getMapAsync(this)
+
+        supportActionBar?.title = "Waypoint Journal"
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
-        val sydney = LatLng(-33.852, 151.211)
-        googleMap.addMarker(
-            MarkerOptions()
-                .position(sydney)
-                .title("Marker in Sydney")
-        )
-        googleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
+        val centerUS = LatLng(44.967243,  -103.771556)
+
+        var db = DatabaseHandler(applicationContext)
+        var data = db.readData()
+
+        for (w in data) {
+            googleMap.addMarker(
+                MarkerOptions()
+                    .position(LatLng(w.lat.toDouble(), w.long.toDouble()))
+                    .title(w.title)
+            )
+        }
+
+        googleMap.moveCamera(CameraUpdateFactory.newLatLng(centerUS))
     }
 }
 
