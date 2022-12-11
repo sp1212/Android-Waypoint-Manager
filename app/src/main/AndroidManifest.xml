@@ -2,7 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" >
 
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
 
     <application
         android:allowBackup="true"
@@ -14,6 +15,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Scp4exqproject"
         tools:targetApi="31" >
+
+        <service
+            android:name="ActivityNew"
+            android:foregroundServiceType="location" >
+        </service>
 
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
