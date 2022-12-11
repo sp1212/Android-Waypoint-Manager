@@ -93,4 +93,9 @@ class RecyclerAdapter(var context: Context): RecyclerView.Adapter<RecyclerAdapte
  *  Author: Milad Moosavi
  *  Date: Nov 18, 2017
  *  URL: https://stackoverflow.com/questions/28767413/how-to-open-a-different-activity-on-recyclerview-item-onclick
+ *
+ *  Title: Send Email using Intent - Android Studio - Kotlin
+ *  Author: Atif Pervaiz
+ *  Date: November 19, 2018
+ *  URL: https://devofandroid.blogspot.com/2018/11/send-email-using-intent-android-studio.html
  ***************************************************************************************/
