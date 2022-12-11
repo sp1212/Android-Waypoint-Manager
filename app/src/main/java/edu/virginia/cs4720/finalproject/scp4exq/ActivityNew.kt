@@ -71,7 +71,7 @@ class ActivityNew : AppCompatActivity() {
 
         submitButton.setOnClickListener {
             if (itemTitle.text.toString().isNotEmpty() && chosenDate.text.toString().isNotEmpty()
-                && notesField.text.toString().length < 256) {
+                && notesField.text.toString().length < 256 && latField.text.isNotEmpty() && longField.text.isNotEmpty()) {
                 var item = Waypoint(itemTitle.text.toString(), chosenDate.text.toString(),
                     notesField.text.toString(), latField.text.toString(), longField.text.toString())
                 var db = DatabaseHandler(context)
