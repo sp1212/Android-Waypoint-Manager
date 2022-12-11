@@ -2,13 +2,13 @@ package edu.virginia.cs4720.finalproject.scp4exq
 
 import android.content.Context
 import android.content.Intent
+import android.content.Intent.*
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
-import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 
 
@@ -44,6 +44,20 @@ class RecyclerAdapter(var context: Context): RecyclerView.Adapter<RecyclerAdapte
                 Toast.makeText(context, "Unable to delete item.", Toast.LENGTH_SHORT).show()
             }
         }
+
+        holder.shareButton.setOnClickListener {
+            val intent = Intent(ACTION_SEND)
+            intent.putExtra(EXTRA_SUBJECT, "Waypoint: \"" + holder.title.text + "\"")
+            intent.putExtra(
+                EXTRA_TEXT, "Waypoint\n" +
+                    "Title:  " + holder.title.text + "\n" +
+                    "Date:  " + holder.date.text + "\n" +
+                    "Coordinates:  " + holder.latlong.text + "\n" +
+                    "Notes:  " + holder.notes.text + "\n")
+            intent.type = "text/plain"
+
+            context.startActivity(createChooser(intent, "Share your waypoint:"))
+        }
     }
 
     inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
@@ -53,6 +67,7 @@ class RecyclerAdapter(var context: Context): RecyclerView.Adapter<RecyclerAdapte
         var notes: TextView
         var latlong: TextView
         var deleteButton: ImageButton
+        var shareButton: ImageButton
 
         init {
             id = itemView.findViewById(R.id.itemId)
@@ -61,6 +76,7 @@ class RecyclerAdapter(var context: Context): RecyclerView.Adapter<RecyclerAdapte
             notes = itemView.findViewById(R.id.notes_text)
             latlong = itemView.findViewById(R.id.text_latlong)
             deleteButton = itemView.findViewById(R.id.delete_button)
+            shareButton = itemView.findViewById(R.id.share_button)
         }
     }
 
