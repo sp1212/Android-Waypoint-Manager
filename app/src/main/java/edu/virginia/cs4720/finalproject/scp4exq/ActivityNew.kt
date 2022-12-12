@@ -11,18 +11,28 @@ import android.location.LocationManager
 import android.os.Bundle
 import android.os.Looper
 import android.provider.Settings
+import android.util.Log
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import com.android.volley.Request
+import com.android.volley.Response
+import com.android.volley.toolbox.StringRequest
+import com.android.volley.toolbox.Volley
 import com.google.android.gms.location.*
 import com.google.android.gms.tasks.CancellationToken
 import com.google.android.gms.tasks.CancellationTokenSource
 import com.google.android.gms.tasks.OnTokenCanceledListener
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_new.*
+import org.json.JSONObject
+import java.net.URL
 import java.util.*
+import kotlin.math.roundToInt
 
 class ActivityNew : AppCompatActivity() {
 
@@ -32,6 +42,10 @@ class ActivityNew : AppCompatActivity() {
     lateinit var latField: TextView
     lateinit var longField: TextView
     lateinit var locationButton: Button
+    lateinit var weatherButton: Button
+    lateinit var weatherIcon: ImageView
+    lateinit var weatherIconUrl: TextView
+    lateinit var temp: TextView
 
     val PERMISSION_ID = 42
     private lateinit var fusedLocationClient: FusedLocationProviderClient
@@ -39,6 +53,8 @@ class ActivityNew : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_new)
+
+        supportActionBar?.title = "Waypoint Journal"
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
@@ -48,6 +64,10 @@ class ActivityNew : AppCompatActivity() {
         latField = findViewById(R.id.latitude_new)
         longField = findViewById(R.id.longitude_new)
         locationButton = findViewById(R.id.location_button)
+        weatherButton = findViewById(R.id.weather_button)
+        weatherIcon = findViewById(R.id.new_weather)
+        weatherIconUrl = findViewById(R.id.weather_url)
+        temp = findViewById(R.id.weather_temp2)
 
         locationButton.setOnClickListener {
             getLastLocation()
@@ -73,7 +93,8 @@ class ActivityNew : AppCompatActivity() {
             if (itemTitle.text.toString().isNotEmpty() && chosenDate.text.toString().isNotEmpty()
                 && notesField.text.toString().length < 256 && latField.text.isNotEmpty() && longField.text.isNotEmpty()) {
                 var item = Waypoint(itemTitle.text.toString(), chosenDate.text.toString(),
-                    notesField.text.toString(), latField.text.toString(), longField.text.toString())
+                    notesField.text.toString(), latField.text.toString(), longField.text.toString(),
+                    weatherIconUrl.text.toString(), temp.text.toString())
                 var db = DatabaseHandler(context)
                 db.insertData(item)
 
@@ -83,7 +104,34 @@ class ActivityNew : AppCompatActivity() {
                 Toast.makeText(context, "Input validation error.", Toast.LENGTH_SHORT).show()
             }
         }
-        supportActionBar?.title = "Waypoint Journal"
+
+        weatherButton.setOnClickListener {
+            if (latField.text.isEmpty() || longField.text.isEmpty()) {
+                Toast.makeText(context, "Error - please set your location before requesting weather data.", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+            var lat = latField.text.toString()
+            var long = longField.text.toString()
+            val url : String = "https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&appid=${BuildConfig.OW_API_KEY}&units=imperial"
+            downloadTask(url, this)
+        }
+    }
+
+    private fun downloadTask(url: String, context: Context) {
+        val queue = Volley.newRequestQueue(this)
+        val request = StringRequest(Request.Method.GET, url,
+            { response ->
+                val json = JSONObject(response.toString())
+                var tempString = json.getJSONObject("main").get("temp").toString().toDouble().roundToInt().toString()
+                var iconType = JSONObject(json.getJSONArray("weather")[0].toString()).get("icon")
+                var iconUrl = "https://openweathermap.org/img/wn/${iconType}.png"
+                temp.text = "${tempString}° F"
+                weatherIconUrl.text = iconUrl
+                Picasso.with(context).load(iconUrl).into(weatherIcon)
+            }, {
+                Toast.makeText(context, "Error retrieving weather data.", Toast.LENGTH_SHORT).show()
+            })
+        queue.add(request)
     }
 
     private fun formatLeadingZero(input : Int) : String {
@@ -174,6 +222,7 @@ class ActivityNew : AppCompatActivity() {
         )
     }
 
+    @SuppressLint("MissingSuperCall")
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
         if (requestCode == PERMISSION_ID) {
             if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
@@ -209,4 +258,9 @@ class ActivityNew : AppCompatActivity() {
  *  Author: Ahmed Maad
  *  Date: May 8, 2022
  *  URL: https://stackoverflow.com/questions/72159435/how-to-get-location-using-fusedlocationclient-getcurrentlocation-method-in-kot
+ *
+ *  Title: Kotlin Json Parsing | JSON Parsing in Kotlin android using volley | Parse json from web url android
+ *  Author: Programming Guru
+ *  Date: Dec 21, 2021
+ *  URL: https://www.youtube.com/watch?v=wplXJJAS3Fg
  ***************************************************************************************/

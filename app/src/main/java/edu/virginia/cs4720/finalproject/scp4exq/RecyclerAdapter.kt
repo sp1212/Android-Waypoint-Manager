@@ -8,9 +8,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
+import com.squareup.picasso.Picasso
 
 
 class RecyclerAdapter(var context: Context): RecyclerView.Adapter<RecyclerAdapter.ViewHolder>() {
@@ -33,6 +35,14 @@ class RecyclerAdapter(var context: Context): RecyclerView.Adapter<RecyclerAdapte
         holder.date.text = data[position].date
         holder.notes.text = data[position].notes
         holder.latlong.text = data[position].lat + " " + data[position].long
+
+        if (data[position].imageUrl.compareTo("") != 0) {
+            Picasso.with(context).load(data[position].imageUrl).into(holder.weatherIcon)
+        }
+
+        if (data[position].temp.compareTo("") != 0) {
+            holder.temp.text = data[position].temp
+        }
 
         holder.deleteButton.setOnClickListener {
             val builder = AlertDialog.Builder(context)
@@ -79,6 +89,8 @@ class RecyclerAdapter(var context: Context): RecyclerView.Adapter<RecyclerAdapte
         var latlong: TextView
         var deleteButton: ImageButton
         var shareButton: ImageButton
+        var temp: TextView
+        var weatherIcon: ImageView
 
         init {
             id = itemView.findViewById(R.id.itemId)
@@ -88,6 +100,8 @@ class RecyclerAdapter(var context: Context): RecyclerView.Adapter<RecyclerAdapte
             latlong = itemView.findViewById(R.id.text_latlong)
             deleteButton = itemView.findViewById(R.id.delete_button)
             shareButton = itemView.findViewById(R.id.share_button)
+            temp = itemView.findViewById(R.id.weather_temp)
+            weatherIcon = itemView.findViewById(R.id.weather_image)
         }
     }
 

@@ -93,12 +93,14 @@
 
         <TextView
             android:id="@+id/weather_temp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="74dp"
+            android:layout_height="36dp"
             android:layout_marginBottom="16dp"
-            android:text="-2° F"
+            android:gravity="center"
+            android:text="-° F"
+            android:textAlignment="center"
             android:textColor="#FFFFFF"
-            android:textSize="20sp"
+            android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/weather_image"
             app:layout_constraintHorizontal_bias="0.5"
@@ -121,7 +123,7 @@
             android:textColor="#FFFFFF"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/share_button"
-            app:layout_constraintStart_toEndOf="@+id/weather_temp" />
+            app:layout_constraintStart_toEndOf="@+id/weather_image" />
 
         <TextView
             android:id="@+id/text_latlong"

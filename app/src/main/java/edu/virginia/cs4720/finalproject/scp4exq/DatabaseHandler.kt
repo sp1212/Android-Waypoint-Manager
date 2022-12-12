@@ -15,6 +15,8 @@ const val COL_DATE = "date"
 const val COL_NOTES = "notes"
 const val COL_LAT = "lat"
 const val COL_LONG = "long"
+const val COL_IMAGEURL = "imageUrl"
+const val COL_TEMP = "temp"
 
 class DatabaseHandler(var context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null, 1) {
     override fun onCreate(db: SQLiteDatabase?) {
@@ -25,7 +27,9 @@ class DatabaseHandler(var context: Context) : SQLiteOpenHelper(context, DATABASE
                 COL_DATE + " VARCHAR(256)," +
                 COL_NOTES + " VARCHAR(256)," +
                 COL_LAT + " VARCHAR(256)," +
-                COL_LONG + " VARCHAR(256))"
+                COL_LONG + " VARCHAR(256)," +
+                COL_IMAGEURL + " VARCHAR(256)," +
+                COL_TEMP + " VARCHAR(256))"
 
         db?.execSQL(createTable)
     }
@@ -43,6 +47,9 @@ class DatabaseHandler(var context: Context) : SQLiteOpenHelper(context, DATABASE
         cv.put(COL_NOTES, item.notes)
         cv.put(COL_LAT, item.lat)
         cv.put(COL_LONG, item.long)
+        cv.put(COL_IMAGEURL, item.imageUrl)
+        cv.put(COL_TEMP, item.temp)
+
 
         var result = db.insert(TABLE_NAME, null, cv)
         if (result == (-1).toLong()) {
@@ -67,6 +74,8 @@ class DatabaseHandler(var context: Context) : SQLiteOpenHelper(context, DATABASE
                 item.notes = result.getString(3)
                 item.lat = result.getString(4)
                 item.long = result.getString(5)
+                item.imageUrl = result.getString(6)
+                item.temp = result.getString(7)
                 list.add(item)
             } while (result.moveToNext())
         }
