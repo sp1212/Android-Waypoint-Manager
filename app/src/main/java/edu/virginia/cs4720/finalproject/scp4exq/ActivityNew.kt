@@ -11,7 +11,6 @@ import android.location.LocationManager
 import android.os.Bundle
 import android.os.Looper
 import android.provider.Settings
-import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
@@ -20,7 +19,6 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import com.android.volley.Request
-import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.google.android.gms.location.*
@@ -30,24 +28,23 @@ import com.google.android.gms.tasks.OnTokenCanceledListener
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_new.*
 import org.json.JSONObject
-import java.net.URL
 import java.util.*
 import kotlin.math.roundToInt
 
 class ActivityNew : AppCompatActivity() {
 
-    lateinit var chooseDate: Button
-    lateinit var chosenDate: TextView
-    lateinit var notesField: EditText
-    lateinit var latField: TextView
-    lateinit var longField: TextView
-    lateinit var locationButton: Button
-    lateinit var weatherButton: Button
-    lateinit var weatherIcon: ImageView
-    lateinit var weatherIconUrl: TextView
-    lateinit var temp: TextView
+    private lateinit var chooseDate: Button
+    private lateinit var chosenDate: TextView
+    private lateinit var notesField: EditText
+    private lateinit var latField: TextView
+    private lateinit var longField: TextView
+    private lateinit var locationButton: Button
+    private lateinit var weatherButton: Button
+    private lateinit var weatherIcon: ImageView
+    private lateinit var weatherIconUrl: TextView
+    private lateinit var temp: TextView
 
-    val PERMISSION_ID = 42
+    private val PERMISSION_ID = 42
     private lateinit var fusedLocationClient: FusedLocationProviderClient
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -92,10 +89,10 @@ class ActivityNew : AppCompatActivity() {
         submitButton.setOnClickListener {
             if (itemTitle.text.toString().isNotEmpty() && chosenDate.text.toString().isNotEmpty()
                 && notesField.text.toString().length < 256 && latField.text.isNotEmpty() && longField.text.isNotEmpty()) {
-                var item = Waypoint(itemTitle.text.toString(), chosenDate.text.toString(),
+                val item = Waypoint(itemTitle.text.toString(), chosenDate.text.toString(),
                     notesField.text.toString(), latField.text.toString(), longField.text.toString(),
                     weatherIconUrl.text.toString(), temp.text.toString())
-                var db = DatabaseHandler(context)
+                val db = DatabaseHandler(context)
                 db.insertData(item)
 
                 val intent = Intent(this, MainActivity::class.java)
@@ -110,9 +107,9 @@ class ActivityNew : AppCompatActivity() {
                 Toast.makeText(context, "Error - please set your location before requesting weather data.", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
-            var lat = latField.text.toString()
-            var long = longField.text.toString()
-            val url : String = "https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&appid=${BuildConfig.OW_API_KEY}&units=imperial"
+            val lat = latField.text.toString()
+            val long = longField.text.toString()
+            val url = "https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&appid=${BuildConfig.OW_API_KEY}&units=imperial"
             downloadTask(url, this)
         }
     }
@@ -122,9 +119,9 @@ class ActivityNew : AppCompatActivity() {
         val request = StringRequest(Request.Method.GET, url,
             { response ->
                 val json = JSONObject(response.toString())
-                var tempString = json.getJSONObject("main").get("temp").toString().toDouble().roundToInt().toString()
-                var iconType = JSONObject(json.getJSONArray("weather")[0].toString()).get("icon")
-                var iconUrl = "https://openweathermap.org/img/wn/${iconType}.png"
+                val tempString = json.getJSONObject("main").get("temp").toString().toDouble().roundToInt().toString()
+                val iconType = JSONObject(json.getJSONArray("weather")[0].toString()).get("icon")
+                val iconUrl = "https://openweathermap.org/img/wn/${iconType}.png"
                 temp.text = "${tempString}° F"
                 weatherIconUrl.text = iconUrl
                 Picasso.with(context).load(iconUrl).into(weatherIcon)
@@ -136,9 +133,9 @@ class ActivityNew : AppCompatActivity() {
 
     private fun formatLeadingZero(input : Int) : String {
         return if (input < 10) {
-            "0$input";
+            "0$input"
         } else {
-            input.toString();
+            input.toString()
         }
     }
 
@@ -151,7 +148,7 @@ class ActivityNew : AppCompatActivity() {
                     override fun isCancellationRequested() = false
                     })
                     .addOnCompleteListener(this) { task ->
-                    var location: Location? = task.result
+                    val location: Location? = task.result
                     if (location == null) {
                         requestNewLocationData()
                     } else {
@@ -171,7 +168,7 @@ class ActivityNew : AppCompatActivity() {
 
     @SuppressLint("MissingPermission")
     private fun requestNewLocationData() {
-        var mLocationRequest = LocationRequest()
+        val mLocationRequest = LocationRequest()
         mLocationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
         mLocationRequest.interval = 10
         mLocationRequest.fastestInterval = 5
@@ -186,14 +183,14 @@ class ActivityNew : AppCompatActivity() {
 
     private val mLocationCallback = object : LocationCallback() {
         override fun onLocationResult(locationResult: LocationResult) {
-            var mLastLocation: Location? = locationResult.lastLocation
+            val mLastLocation: Location? = locationResult.lastLocation
             findViewById<TextView>(R.id.latitude_new).text = mLastLocation?.latitude.toString()
             findViewById<TextView>(R.id.longitude_new).text = mLastLocation?.longitude.toString()
         }
     }
 
     private fun isLocationEnabled(): Boolean {
-        var locationManager: LocationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        val locationManager: LocationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
         return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) || locationManager.isProviderEnabled(
             LocationManager.NETWORK_PROVIDER
         )

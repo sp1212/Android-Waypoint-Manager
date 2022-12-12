@@ -17,8 +17,8 @@ import com.squareup.picasso.Picasso
 
 class RecyclerAdapter(var context: Context): RecyclerView.Adapter<RecyclerAdapter.ViewHolder>() {
 
-    var db = DatabaseHandler(context)
-    var data = db.readData().sortedBy { it.date }
+    private var db = DatabaseHandler(context)
+    private var data = db.readData().sortedBy { it.date }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerAdapter.ViewHolder {
         val v = LayoutInflater.from(parent.context).inflate(R.layout.card_layout, parent, false)
@@ -50,7 +50,7 @@ class RecyclerAdapter(var context: Context): RecyclerView.Adapter<RecyclerAdapte
                 .setCancelable(false)
                 .setPositiveButton("Yes") { dialog, id ->
                     if (holder.id.text.toString().toInt() >= 0) {
-                        var db = DatabaseHandler(context)
+                        val db = DatabaseHandler(context)
                         db.deleteItem(holder.id.text.toString().toInt())
 
                         val intent = Intent(it.context, MainActivity::class.java)
@@ -59,7 +59,7 @@ class RecyclerAdapter(var context: Context): RecyclerView.Adapter<RecyclerAdapte
                         Toast.makeText(context, "Unable to delete item.", Toast.LENGTH_SHORT).show()
                     }
                 }
-                .setNegativeButton("No") { dialog, id ->
+                .setNegativeButton("No") { dialog, _ ->
                     dialog.dismiss()
                 }
             val alert = builder.create()

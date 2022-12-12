@@ -24,8 +24,8 @@ class ActivityMap : AppCompatActivity(), OnMapReadyCallback {
     override fun onMapReady(googleMap: GoogleMap) {
         val centerUS = LatLng(44.967243,  -103.771556)
 
-        var db = DatabaseHandler(applicationContext)
-        var data = db.readData()
+        val db = DatabaseHandler(applicationContext)
+        val data = db.readData()
 
         for (w in data) {
             googleMap.addMarker(

@@ -41,7 +41,7 @@ class DatabaseHandler(var context: Context) : SQLiteOpenHelper(context, DATABASE
     fun insertData(item : Waypoint) {
         val db = this.writableDatabase
 
-        var cv = ContentValues()
+        val cv = ContentValues()
         cv.put(COL_TITLE, item.title)
         cv.put(COL_DATE, item.date)
         cv.put(COL_NOTES, item.notes)
@@ -51,7 +51,7 @@ class DatabaseHandler(var context: Context) : SQLiteOpenHelper(context, DATABASE
         cv.put(COL_TEMP, item.temp)
 
 
-        var result = db.insert(TABLE_NAME, null, cv)
+        val result = db.insert(TABLE_NAME, null, cv)
         if (result == (-1).toLong()) {
             Toast.makeText(context, "Item creation failure.", Toast.LENGTH_SHORT).show()
         } else {
@@ -60,14 +60,14 @@ class DatabaseHandler(var context: Context) : SQLiteOpenHelper(context, DATABASE
     }
 
     fun readData() : MutableList<Waypoint> {
-        var list : MutableList<Waypoint> = ArrayList()
+        val list : MutableList<Waypoint> = ArrayList()
 
         val db = this.readableDatabase
         val query = "Select * from $TABLE_NAME"
         val result = db.rawQuery(query, null)
         if (result.moveToFirst()) {
             do {
-                var item = Waypoint()
+                val item = Waypoint()
                 item.id = result.getString(0).toInt()
                 item.title = result.getString(1)
                 item.date = result.getString(2)
@@ -89,14 +89,6 @@ class DatabaseHandler(var context: Context) : SQLiteOpenHelper(context, DATABASE
         val db = this.writableDatabase
         db.delete(TABLE_NAME, "$COL_ID=?", arrayOf(id.toString()))
         db.close()
-    }
-
-    private fun formatLeadingZero(input : Int) : String {
-        return if (input < 10) {
-            "0$input"
-        } else {
-            input.toString()
-        }
     }
 }
 
