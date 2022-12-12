@@ -87,6 +87,7 @@ class ActivityNew : AppCompatActivity() {
         temp = findViewById(R.id.weather_temp2)
 
         locationButton.setOnClickListener {
+            Toast.makeText(this, "Retrieving location data...", Toast.LENGTH_SHORT).show()
             getLastLocation()
         }
 
@@ -130,6 +131,7 @@ class ActivityNew : AppCompatActivity() {
             val lat = latField.text.toString()
             val long = longField.text.toString()
             val url = "https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&appid=${BuildConfig.OW_API_KEY}&units=imperial"
+            Toast.makeText(this, "Retrieving weather data...", Toast.LENGTH_SHORT).show()
             downloadTask(url, this)
         }
     }
@@ -215,7 +217,7 @@ class ActivityNew : AppCompatActivity() {
                     }
                 }
             } else {
-                Toast.makeText(this, "Turn on location", Toast.LENGTH_LONG).show()
+                Toast.makeText(this, "Please turn on location settings.", Toast.LENGTH_LONG).show()
                 val intent = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
                 startActivity(intent)
             }
