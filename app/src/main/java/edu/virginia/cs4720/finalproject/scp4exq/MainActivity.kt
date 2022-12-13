@@ -3,6 +3,8 @@ package edu.virginia.cs4720.finalproject.scp4exq
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -16,8 +18,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        bottomNavigationView.background = null
-        bottomNavigationView.menu.getItem(1).isEnabled = false
 
         layoutManager = LinearLayoutManager(this)
 
@@ -26,20 +26,27 @@ class MainActivity : AppCompatActivity() {
         adapter = RecyclerAdapter(this)
         recyclerView.adapter = adapter
 
-        val newItemButton = findViewById<FloatingActionButton>(R.id.fab)
-        newItemButton.setOnClickListener {
-            val intent = Intent(this, ActivityNew::class.java)
-            startActivity(intent)
-        }
-
-        // placeholder to open maps while figuring out nav menu
-        val mapButtonPlaceholder = findViewById<FloatingActionButton>(R.id.floatingActionButton)
-        mapButtonPlaceholder.setOnClickListener {
-            val intent = Intent(this, ActivityMap::class.java)
-            startActivity(intent)
-        }
-
         supportActionBar?.title = "Waypoint Journal"
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        menuInflater.inflate(R.menu.menu_main, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.addTb -> {
+                val intent = Intent(this, ActivityNew::class.java)
+                startActivity(intent)
+            }
+            R.id.mapTb -> {
+                val intent = Intent(this, ActivityMap::class.java)
+                startActivity(intent)
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 }
 

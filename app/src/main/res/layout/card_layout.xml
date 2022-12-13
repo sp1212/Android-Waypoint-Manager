@@ -7,7 +7,7 @@
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
     android:visibility="visible"
-    app:cardBackgroundColor="@color/blue"
+    app:cardBackgroundColor="@color/green"
     app:cardCornerRadius="14dp"
     app:cardElevation="4dp"
     app:contentPadding="4dp">
@@ -23,7 +23,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="Item Title"
+            android:text="@string/item_title"
             android:textColor="@color/white"
             android:textSize="30sp"
             app:layout_constraintEnd_toStartOf="@+id/delete_button"
@@ -34,7 +34,7 @@
             android:id="@+id/item_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="2022-09-28"
+            android:text="@string/_2022_09_28"
             android:textColor="@color/white"
             android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="@+id/item_title"
@@ -56,13 +56,12 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="16dp"
-            android:backgroundTint="#FF0000"
-            android:contentDescription="Delete"
+            android:contentDescription="@string/delete"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/share_button"
             app:srcCompat="@android:drawable/ic_menu_delete"
-            app:tint="#FFFFFF" />
+            app:tint="@color/black" />
 
         <ImageButton
             android:id="@+id/share_button"
@@ -70,12 +69,13 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="8dp"
-            android:contentDescription="Share"
+            android:contentDescription="@string/share"
             app:layout_constraintBottom_toTopOf="@+id/delete_button"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_chainStyle="spread_inside"
-            app:srcCompat="@android:drawable/ic_menu_share" />
+            app:srcCompat="@android:drawable/ic_menu_share"
+            app:tint="@color/black" />
 
         <ImageView
             android:id="@+id/weather_image"
@@ -83,6 +83,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="16dp"
+            android:contentDescription="@string/weather_image_placeholder"
             android:scaleX="2"
             android:scaleY="2"
             app:layout_constraintBottom_toTopOf="@+id/weather_temp"
@@ -97,7 +98,7 @@
             android:layout_height="36dp"
             android:layout_marginBottom="16dp"
             android:gravity="center"
-            android:text="-° F"
+            android:text="@string/f"
             android:textAlignment="center"
             android:textColor="#FFFFFF"
             android:textSize="16sp"
@@ -116,7 +117,7 @@
             android:gravity="center"
             android:selectAllOnFocus="true"
             android:singleLine="false"
-            android:text="This is a sample journal entry of multiple lines of text."
+            android:text="@string/this_is_a_sample_journal_entry_of_multiple_lines_of_text"
             android:textAlignment="center"
             android:textAllCaps="false"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
@@ -129,7 +130,7 @@
             android:id="@+id/text_latlong"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="N 38.8923 W 77.4266"
+            android:text="@string/n_38_8923_w_77_4266"
             android:textColor="#FFFFFF"
             app:layout_constraintBottom_toTopOf="@+id/notes_text"
             app:layout_constraintEnd_toEndOf="@+id/item_title"

@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">scp4exq-project</string>
+    <string name="f">-° F</string>
+    <string name="share">Share</string>
+    <string name="n_38_8923_w_77_4266">N 38.8923 W 77.4266</string>
+    <string name="delete">Delete</string>
+    <string name="_2022_09_28">2022-09-28</string>
+    <string name="this_is_a_sample_journal_entry_of_multiple_lines_of_text">This is a sample journal entry of multiple lines of text.</string>
+    <string name="item_title">Item Title</string>
+    <string name="weather_image_placeholder">Weather image placeholder</string>
 </resources>
